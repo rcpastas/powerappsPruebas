@@ -1,0 +1,375 @@
+"BrowseScreen1 As screen.'phoneBrowseLayout_ver3.0'":
+
+    RectQuickActionBar1 As rectangle:
+        Height: =88
+        Width: =1112
+        ZIndex: =1
+
+    LblAppName1 As label:
+        Fill: =RGBA(58, 58, 58, 0)
+        Height: =88
+        Size: =27
+        Text: ="Proyecto"
+        Width: =1112
+        Wrap: =false
+        ZIndex: =2
+
+    IconRefresh1 As icon.Reload:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Reload
+        OnSelect: =Refresh([@Proyecto])
+        PaddingBottom: =22
+        PaddingLeft: =22
+        PaddingRight: =22
+        PaddingTop: =22
+        TabIndex: =0
+        Tooltip: ="Actualizar lista"
+        Width: =88
+        X: =888
+        ZIndex: =3
+
+    IconSortUpDown1 As icon.ArrowsUpDown:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Sort
+        OnSelect: |-
+            =UpdateContext({SortDescending1: !SortDescending1})
+        PaddingBottom: =26
+        PaddingLeft: =26
+        PaddingRight: =26
+        PaddingTop: =26
+        TabIndex: =0
+        Tooltip: =If(SortDescending1, "Ordenar la lista en orden alfabético inverso", "Ordenar la lista en orden alfabético")
+        Width: =88
+        X: =963
+        ZIndex: =4
+
+    IconNewItem1 As icon.Add:
+        AccessibleLabel: =Self.Tooltip
+        DisplayMode: =If(DataSourceInfo([@Proyecto], DataSourceInfo.CreatePermission), DisplayMode.Edit, DisplayMode.Disabled)
+        Height: =88
+        Icon: =Icon.Add
+        OnSelect: =NewForm(EditForm1);Navigate(EditScreen1, ScreenTransition.None)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Crear elemento"
+        Width: =99
+        X: =789
+        ZIndex: =5
+
+    TextSearchBox1 As text:
+        Default: =""
+        DelayOutput: =true
+        Height: =68
+        HintText: ="Buscar en elementos"
+        PaddingLeft: =70
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =7
+        RadiusTopLeft: =0
+        RadiusTopRight: =7
+        Size: =21
+        Width: =358
+        Y: =RectQuickActionBar1.Height
+        ZIndex: =6
+
+    SearchIcon1 As icon.Search:
+        Color: =RGBA(191, 190, 190, 1)
+        Height: =Self.Width
+        Icon: =Icon.Search
+        PaddingBottom: =14
+        PaddingLeft: =14
+        PaddingRight: =14
+        PaddingTop: =14
+        Tooltip: ="Buscar"
+        Width: =TextSearchBox1.Height
+        X: =TextSearchBox1.X
+        Y: =TextSearchBox1.Y
+        ZIndex: =7
+
+    Rectangle11 As rectangle:
+        Height: =2
+        Width: =640
+        Y: =TextSearchBox1.Y + TextSearchBox1.Height
+        ZIndex: =8
+
+    "BrowseGallery1 As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
+        Height: =225
+        Items: |-
+            =SortByColumns(
+                Filter(
+                    [@parametros],
+                    StartsWith(
+                        'id_proyecto:Title'.Value,
+                        TextSearchBox1.Text
+                    )
+                    &&
+            
+                    StartsWith(
+                        Estado.Value,
+                        tipo.Selected.Result
+                    )
+            
+                    &&
+            
+                    StartsWith(
+                        'Creado por'.DisplayName,
+                        Usuario.Selected.Result
+                    )
+                ),
+                "Title"
+                )
+        Layout: =Layout.Vertical
+        OnSelect: =Navigate(DetailScreen1, ScreenTransition.None)
+        ShowScrollbar: =false
+        TemplatePadding: =0
+        TemplateSize: =130
+        Width: =674
+        X: =5
+        Y: =169
+        ZIndex: =9
+
+        Title1 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Título
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            X: =32
+            Y: =16
+            ZIndex: =1
+
+        Subtitle1 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.id_proyecto.Id
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            X: =32
+            Y: =Title1.Y + Title1.Height + 2
+            ZIndex: =2
+
+        Body1 As label:
+            Height: =Self.Size * 4
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Estado.Value
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            X: =32
+            Y: =Subtitle1.Y + Subtitle1.Height + 4
+            ZIndex: =3
+
+        NextArrow1 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Height: =60
+            Icon: =Icon.ChevronRight
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Ver los detalles del elemento"
+            Width: =60
+            X: =Parent.TemplateWidth - Self.Width - 5
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =4
+
+        Separator1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
+    Button1 As button:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1), 0%)
+        Height: =70
+        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), 0%)
+        OnSelect: =Set(valor,20)
+        Size: =24
+        Text: ="Botón"
+        Width: =280
+        X: =649
+        Y: =424
+        ZIndex: =17
+
+    PartialCircle1_2 As partialCircle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=10,0,valor=0,80,8))%)
+        X: =569
+        Y: =528
+        ZIndex: =41
+
+    Rectangle1_24 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=10,0,valor=0,80,8))%)
+        Width: =58
+        X: =611
+        Y: =528
+        ZIndex: =42
+
+    Rectangle1_25 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=20,0,valor=0,80,16))%)
+        Width: =50
+        X: =659
+        Y: =528
+        ZIndex: =43
+
+    Rectangle1_26 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=30,0,valor=0,80,24))%)
+        Width: =50
+        X: =704
+        Y: =528
+        ZIndex: =44
+
+    Circle2_2 As circle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=100,0,valor=0,80,80))%)
+        X: =1012
+        Y: =528
+        ZIndex: =46
+
+    Rectangle1_28 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=40,0,valor=0,80,32))%)
+        Width: =50
+        X: =754
+        Y: =528
+        ZIndex: =47
+
+    Rectangle1_29 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=50,0,valor=0,80,40))%)
+        Width: =50
+        X: =799
+        Y: =528
+        ZIndex: =48
+
+    Rectangle1_30 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1), (If(valor>=60,0,valor=0,80,48))%)
+        Width: =50
+        X: =839
+        Y: =528
+        ZIndex: =49
+
+    Rectangle1_31 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1), (If(valor>=70,0,valor=0,80,56))%)
+        Width: =50
+        X: =879
+        Y: =528
+        ZIndex: =50
+
+    Rectangle1_32 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1), (If(valor>=80,0,valor=0,80,64))%)
+        Width: =50
+        X: =919
+        Y: =528
+        ZIndex: =51
+
+    Rectangle1_33 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=90,0,valor=0,80,72))%)
+        Width: =50
+        X: =964
+        Y: =528
+        ZIndex: =52
+
+    Rectangle1_34 As rectangle:
+        Fill: =ColorFade(RGBA(56, 96, 178, 1),  (If(valor>=100,0,valor=0,80,80))%)
+        Width: =50
+        X: =1004
+        Y: =528
+        ZIndex: =53
+
+    TextSearchBox2 As text:
+        Default: =""
+        DelayOutput: =true
+        Height: =68
+        HintText: ="Buscar en elementos"
+        PaddingLeft: =70
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =7
+        RadiusTopLeft: =0
+        RadiusTopRight: =7
+        Size: =21
+        Width: =358
+        X: =550
+        Y: =90
+        ZIndex: =54
+
+    tipo As dropdown:
+        AllowEmptySelection: =true
+        Default: =
+        Height: =51
+        Items: |
+            =ForAll(Distinct(parametros, Estado.Value), {Result: ThisRecord.Value})
+        Reset: =true
+        Size: =21
+        Width: =400
+        X: =704
+        Y: =169
+        ZIndex: =55
+
+    Usuario As dropdown:
+        AllowEmptySelection: =true
+        Default: =LookUp(parametros, User().FullName = 'Creado por'.DisplayName).'Creado por'.DisplayName
+        Height: =51
+        Items: |
+            =ForAll(Distinct(parametros, 'Creado por'.DisplayName), {Result: ThisRecord.Value})
+        Reset: =true
+        Size: =21
+        Width: =400
+        X: =712
+        Y: =265
+        ZIndex: =56
+
+    Label1 As label:
+        Height: =70
+        Size: =21
+        Text: =
+        Width: =128
+        X: =761
+        Y: =543
+        ZIndex: =57
+
+    Label2 As label:
+        Height: =70
+        Size: =21
+        Text: ="Texto"
+        Width: =560
+        X: =40
+        Y: =40
+        ZIndex: =58
+
+    TextInput1 As text:
+        Default: ="jhbjhb"
+        Height: =70
+        OnChange: =Set(valor,100)
+        Size: =21
+        Width: =560
+        X: =26
+        Y: =394
+        ZIndex: =59
+
+    Button3 As button:
+        Height: =70
+        OnSelect: |-
+            =Navigate(Button1,ScreenTransition.None);
+            Select(Button1)
+        Size: =24
+        Text: ="Botón"
+        Width: =280
+        X: =78
+        Y: =514
+        ZIndex: =60
+

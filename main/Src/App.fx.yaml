@@ -1,0 +1,8 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |-
+        =//Set(valor; DateDiff( Now(); DateValue("30/3/2023") ))
+        
+        Select(Label1
+    StartScreen: =
+
