@@ -79,3 +79,18 @@ Screen3 As screen:
         Y: =136
         ZIndex: =2
 
+    Rectangle1 As rectangle:
+        X: =910
+        Y: =277
+        ZIndex: =3
+
+    Rectangle1_1 As rectangle:
+        X: =910
+        Y: =377
+        ZIndex: =4
+
+    Rectangle1_2 As rectangle:
+        X: =910
+        Y: =477
+        ZIndex: =5
+
